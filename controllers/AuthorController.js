@@ -30,8 +30,20 @@ class AuthorController {
             name: req.body.name,
             dob: req.body.dob
         });
-        author.save();
-        res.send(author);
+        author.save((err, newAutor) => {
+            if (err) {
+                console.log(err);
+                res.render('authors/create', 
+                    {
+                        author: newAuthor,
+                        errorMessage : 'Error in creating Error'
+                    }
+                );
+            } else {
+                // res.redirect(`authors/${newAuthor._id}`);
+                res.redirect('authors');
+            }
+        });
     }
  }
 

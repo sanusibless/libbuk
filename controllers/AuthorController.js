@@ -10,7 +10,8 @@ class AuthorController {
         }
         try {
             const authors = await Author.find(searchOptions);
-            res.render('authors/index', { authors,
+            res.render('authors/index', { 
+                authors,
                 searchOptions: req.query
             });
         } catch (error) {

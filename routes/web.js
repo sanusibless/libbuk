@@ -15,7 +15,7 @@ router.post('/authors/create', AuthorController.storeAuthor);
 // Books Routes
 router.get('/books', BookController.index);
 router.get('/books/create', BookController.createBookView);
-router.post('/books/store', BookController.storeBook);
+router.post('/book/store', BookController.storeBook);
 router.get('/book/:id/show', BookController.getBook);
 router.get('/book/:id/edit', BookController.editBookView);
 router.put('/book/:id/update', BookController.updateBook);

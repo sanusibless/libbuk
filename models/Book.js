@@ -23,7 +23,7 @@ const BookSchema = new mongoose.Schema({
     },
     coverImageUrl: {
         type: String,
-        required: true
+        required: false
     },
     author: {
         type: mongoose.Schema.Types.ObjectId,
@@ -31,6 +31,17 @@ const BookSchema = new mongoose.Schema({
         ref: 'Author',
     },
     genre: [String]
+}, {
+    methods: {
+
+    },
+    virtuals: {
+        summary: {
+            get() {
+                return this.title + ' was published by ' + this.author.name + "on " + new Date(this.publishedDate).toISOString();
+            }
+        }
+    }
 });
 
 

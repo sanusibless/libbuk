@@ -1,0 +1,23 @@
+
+
+<form action="/book/store" method="POST">
+    <label>Title</label>
+    <input type="text" name="title" value="<%= book?.title %>">
+    <label>Description</label>
+    <input type="text" name="description" value="<%= book?.description %>">
+    <label>Published Date</label>
+
+    <input type="date" name="publishedDate" value="<%= book?.publishedDate %>">
+    <label>Page Count</label>
+    <input type="number" name="pageCount" value="<%= book?.pageCount %>">
+    <label>Author</label>
+    <select name="author">
+        <% authors.forEach(author => { %>
+            <option value="<%= author._id %>"><%= author.name %></option>
+        <% }) %>
+    </select>
+    <a href="/books">Cancel</a>
+    <button type="submit">Create</button>
+</form>
+
+<a href="/books">Go Back</a>

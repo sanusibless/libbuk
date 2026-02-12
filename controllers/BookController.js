@@ -1,4 +1,5 @@
 const Book = require("../models/Book");
+const Author = require("../models/Author");
 
 class BookController {
     async index(req, res) {
@@ -12,7 +13,7 @@ class BookController {
             const books =  await Book.find(searchOptions);
             res.render('books/index', { 
                 books,
-                searchOptions 
+                searchOptions
             });
 
         } catch (error) {
@@ -26,7 +27,21 @@ class BookController {
     }
 
     async createBookView(req, res) {
-        res.render('books/create');
+        const authors = await Author.find({});
+        const book = new Book;
+
+        try {
+            res.render('books/create',{
+                'book': new Book,
+                authors: authors
+            });
+        } catch(error) {
+            res.render('/books/create',{
+                book: book,
+                authors: authors,
+                errorMessage: "Unable to get create page"
+            })
+        }
     }
 
     async editBookView(req, res) {
@@ -34,7 +49,27 @@ class BookController {
     }
 
     async storeBook(req, res) {
-        res.redirect('/books');
+        try{
+            const bookData = {
+                'title': req.body.title,
+                'description': req.body.description,
+                'publishedDate': req.body.publishedDate,
+                'pageCount': req.body.pageCount,
+                'coverImageUrl': req.body.coverImageUrl,
+                'author': req.body.author
+            }
+            console.log("bookData", bookData);
+            const book = new Book(bookData);
+            await book.save();
+            res.redirect('/books/');
+        } catch (error) {
+            console.log(error.message);
+            res.render('books/create', {
+                book: req.body,
+                authors: await Author.find({}),
+                errorMessage: error.message
+            });
+        }
     }
 
     async updateBook(req, res) {

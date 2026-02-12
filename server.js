@@ -22,6 +22,8 @@ app.use(bodyParser.urlencoded({ limit: 'true', extended: false }));
 
 mongoose.connect(process.env.DATABASE_URL);
 
+mongoose.set('autoIndex', false);
+
 const db = mongoose.connection;
 db.on('error', error => console.error(error));
 db.once('open', () => console.log('Connected to Mongoose'));
